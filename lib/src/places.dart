@@ -622,8 +622,10 @@ class PlacesSearchResult {
     this.internationalPhoneNumber,
   });
 
-  factory PlacesSearchResult.fromJson(Map<String, dynamic> json) =>
-      _$PlacesSearchResultFromJson(json);
+  factory PlacesSearchResult.fromJson(Map<String, dynamic> json) {
+    print('---------- PAYLOAD $json');
+    return _$PlacesSearchResultFromJson(json);
+  }
   Map<String, dynamic> toJson() => _$PlacesSearchResultToJson(this);
 }
 
