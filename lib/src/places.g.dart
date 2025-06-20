@@ -64,12 +64,14 @@ PlacesSearchResult _$PlacesSearchResultFromJson(Map<String, dynamic> json) =>
       priceLevel: $enumDecodeNullable(_$PriceLevelEnumMap, json['price_level']),
       rating: json['rating'] as num?,
       vicinity: json['vicinity'] as String?,
+      nationalPhoneNumber: json['national_phone_number'] as String?,
+      internationalPhoneNumber: json['international_phone_number'] as String?,
     );
 
 Map<String, dynamic> _$PlacesSearchResultToJson(PlacesSearchResult instance) =>
     <String, dynamic>{
       'icon': instance.icon,
-      'geometry': instance.geometry?.let(geometryToJson),
+      'geometry': instance.geometry,
       'name': instance.name,
       'opening_hours': instance.openingHours,
       'photos': instance.photos,
@@ -84,24 +86,9 @@ Map<String, dynamic> _$PlacesSearchResultToJson(PlacesSearchResult instance) =>
       'permanently_closed': instance.permanentlyClosed,
       'id': instance.id,
       'reference': instance.reference,
+      'national_phone_number': instance.nationalPhoneNumber,
+      'international_phone_number': instance.internationalPhoneNumber,
     };
-
-Map<String, dynamic>? geometryToJson(Geometry geometry) {
-  return {
-    ...geometry.toJson(),
-    'location': geometry.location.toJson(),
-    'bounds': geometry.bounds?.toJson(),
-    'viewport': geometry.viewport?.let((v) => {
-      ...v.toJson(),
-      'northeast': v.northeast.toJson(),
-      'southwest': v.southwest.toJson(),
-    }),
-  };
-}
-
-extension Let<T> on T? {
-  R? let<R>(R Function(T) op) => this == null ? null : op(this as T);
-}
 
 const _$PriceLevelEnumMap = {
   PriceLevel.free: 0,
@@ -202,7 +189,7 @@ Map<String, dynamic> _$OpeningHoursDetailToJson(OpeningHoursDetail instance) =>
 OpeningHoursPeriodDate _$OpeningHoursPeriodDateFromJson(
         Map<String, dynamic> json) =>
     OpeningHoursPeriodDate(
-      day: json['day'] as int,
+      day: (json['day'] as num).toInt(),
       time: json['time'] as String,
     );
 
@@ -329,7 +316,7 @@ Prediction _$PredictionFromJson(Map<String, dynamic> json) => Prediction(
               ?.map((e) => Term.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
-      distanceMeters: json['distance_meters'] as int?,
+      distanceMeters: (json['distance_meters'] as num?)?.toInt(),
       placeId: json['place_id'] as String?,
       reference: json['reference'] as String?,
       types:

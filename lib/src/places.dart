@@ -597,6 +597,10 @@ class PlacesSearchResult {
 
   final String reference;
 
+  final String? nationalPhoneNumber;
+
+  final String? internationalPhoneNumber;
+
   PlacesSearchResult({
     this.id,
     required this.reference,
@@ -614,6 +618,8 @@ class PlacesSearchResult {
     this.priceLevel,
     this.rating,
     this.vicinity,
+    this.nationalPhoneNumber,
+    this.internationalPhoneNumber,
   });
 
   factory PlacesSearchResult.fromJson(Map<String, dynamic> json) =>
